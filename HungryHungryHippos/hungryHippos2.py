@@ -59,14 +59,18 @@ while running:
 
 
 	if not paused:
+		normalSpeed = 3
+
+		if key[pygame.K_LSHIFT]:
+			normalSpeed += normalSpeed * 1.25
 		if key[pygame.K_a] == True:
-			player.vectorUpdate((-3, 0))
+			player.vectorUpdate((-abs(normalSpeed), 0))
 		if key[pygame.K_d] == True:
-			player.vectorUpdate((3, 0))
+			player.vectorUpdate((normalSpeed, 0))
 		if key[pygame.K_w] == True:
-			player.vectorUpdate((0, -3))
+			player.vectorUpdate((0, -abs(normalSpeed)))
 		if key[pygame.K_s] == True:
-			player.vectorUpdate((0, 3))
+			player.vectorUpdate((0, normalSpeed))
 		player_group.update()
 		player_group.draw(screen)
 		watermelon_group.draw(screen)
