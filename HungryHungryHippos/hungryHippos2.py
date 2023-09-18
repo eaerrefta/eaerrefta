@@ -3,6 +3,8 @@ import random
 import eatingwatermelon
 import foodwatermelon
 import hippo
+import sys
+import math
 from pygame.locals import *
 
 
@@ -59,6 +61,7 @@ while running:
 
 
 	if not paused:
+	
 		normalSpeed = 3
 
 		if key[pygame.K_LSHIFT]:
@@ -85,6 +88,20 @@ while running:
 
 
 	for event in pygame.event.get():
+		if event.type == pygame.MOUSEBUTTONUP:
+			mousePos = pygame.mouse.get_pos()
+			pos_a = pygame.Vector2(mousePos)
+			pos_b = pygame.Vector2(player.pos)
+
+			distance = pos_a - pos_b
+
+			while distance.length() > 10:
+				pygame.display.update(player)
+				player.vectorUpdate(distance.normalize())
+				distance = pygame.Vector2(mousePos) - pygame.Vector2(player.pos)
+				player_group.update()
+				player_group.draw(screen)
+
 		if event.type == pygame.QUIT:
 			running = False
 		if event.type == pygame.KEYDOWN:
@@ -108,7 +125,10 @@ while running:
 				food_group.remove(food)
 				score += 1
 
+	player_group.update()
+	player_group.draw(screen)
 
 	pygame.display.flip()
+
 
 pygame.quit()
